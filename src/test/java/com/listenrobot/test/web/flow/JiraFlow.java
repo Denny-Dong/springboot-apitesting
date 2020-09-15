@@ -2,6 +2,7 @@ package com.listenrobot.test.web.flow;
 
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -22,4 +23,12 @@ public class JiraFlow {
         return flag;
     }
 
+
+    public List<String> compositeKeyList(List<Map<String,Object>> issueList) {
+        List<String> keyList = new ArrayList<>();
+        issueList.forEach(issueMap -> {
+            keyList.add((String) issueMap.get("key"));
+        });
+        return keyList;
+    }
 }

@@ -20,13 +20,13 @@ public class User_Steps {
 
     JiraFlow jiraFlow = new JiraFlow();
 
-    public Boolean isIssueImpacted(String issueId) {
+    public Map<String, String> isIssueImpacted(String issueId) {
         List<Map<String, Object>> responseJsonList = RestAssured
                 .given().pathParam("issueId", issueId).queryParam("expand", "changelog")
                 .when().get("/rest/api/2/issue/{issueId}")
                 .then().statusCode(200)
                 .extract().body().jsonPath().get("changelog.histories");
-        return jiraFlow.isImpactIssue(responseJsonList);
+        return jiraFlow.isImpactIssue(issueId, responseJsonList);
     }
 
     @Test
@@ -43,13 +43,23 @@ public class User_Steps {
                 .then().assertThat().statusCode(HttpStatus.SC_OK)
                 .extract().body().jsonPath().get("issues");
         List<String> keyList = jiraFlow.compositeKeyList(issueList);
-        List<String> impactKeyList = new ArrayList<>();
+        List<Map<String, String>> impactKeyList = new ArrayList<>();
         keyList.forEach(key -> {
-            if(isIssueImpacted(key)){
-                impactKeyList.add(key);
+            Map<String, String> severityMap = isIssueImpacted(key);
+            if (severityMap.size() != 0) {
+                impactKeyList.add(severityMap);
             }
         });
         System.out.println(impactKeyList);
+    }
+
+    public void updateField(String issueId, String severityLevel) {
+        Map<String, String> valueMap = Collections.singletonMap("value", severityLevel);
+        Map<String, Object> fieldMap = Collections.singletonMap("customfield_10600", valueMap);
+        Map<String, Map<String, Object>> postBody = Collections.singletonMap("fields", fieldMap);
+        RestAssured.given().body(postBody).pathParam("issueId", issueId)
+                .when().put("/rest/api/2/issue/{issueId}")
+                .then().log().all().assertThat().statusCode(HttpStatus.SC_NO_CONTENT);
     }
 
 

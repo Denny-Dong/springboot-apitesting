@@ -11,14 +11,20 @@ public class JiraFlow {
 
     public Map<String, String> isImpactIssue(String issueId, List responseJsonList) {
         Map<String, String> severityMap = new HashMap<>();
-        Map<String,Map<String,Object>> jsonMap = (Map<String, Map<String,Object>>) responseJsonList.get(responseJsonList.size() - 1);
-        if (jsonMap.get("author").get("name").equals("dongyi")){
-            List itemsList = (List) jsonMap.get("items");
-            Map itemMap = (Map) itemsList.get(itemsList.size() - 1);
-            if (itemMap.get("field").equals("缺陷严重等级") && severityLevel.contains(itemMap.get("fromString"))) {
-                severityMap.put(issueId, (String) itemMap.get("fromString"));
+        if (responseJsonList.size()!=0){
+            Map<String,Map<String,Object>> jsonMap = (Map<String, Map<String,Object>>) responseJsonList.get(responseJsonList.size() - 1);
+            if (jsonMap.get("author").get("name").equals("dongyi")){
+                List itemsList = (List) jsonMap.get("items");
+                Map itemMap = (Map) itemsList.get(itemsList.size() - 1);
+                if (itemMap.get("field").equals("缺陷严重等级") && severityLevel.contains(itemMap.get("fromString"))) {
+                    severityMap.put("issueId",issueId);
+                    severityMap.put("sseverityLevel", (String) itemMap.get("fromString"));
+                }
             }
+        }else {
+            System.out.println("responseJsonList 为空");
         }
+
         return severityMap;
     }
 

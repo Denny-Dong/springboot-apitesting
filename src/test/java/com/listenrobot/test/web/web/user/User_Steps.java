@@ -29,13 +29,12 @@ public class User_Steps {
         return jiraFlow.isImpactIssue(issueId, responseJsonList);
     }
 
-    @Test
-    public void getIssueListFromJQL() {
+    public List<Map<String, String>> getIssueListFromJQL(Integer maxResults) {
         List<String> fields = Collections.singletonList("key");
         Map<String, Object> searchParameter = new HashMap<>();
         searchParameter.put("jql", "project = MDCS AND issuetype = 故障 AND 缺陷严重等级 =  无");
         searchParameter.put("startAt", 0);
-        searchParameter.put("maxResults", 50);
+        searchParameter.put("maxResults", maxResults);
         searchParameter.put("fields", fields);
         List<Map<String, Object>> issueList = RestAssured
                 .given().body(searchParameter)
@@ -50,16 +49,32 @@ public class User_Steps {
                 impactKeyList.add(severityMap);
             }
         });
-        System.out.println(impactKeyList);
+        System.out.println("impactKeyList : " + impactKeyList);
+        System.out.println("impactKeyList size : " + impactKeyList.size());
+        return impactKeyList;
     }
 
     public void updateField(String issueId, String severityLevel) {
         Map<String, String> valueMap = Collections.singletonMap("value", severityLevel);
         Map<String, Object> fieldMap = Collections.singletonMap("customfield_10600", valueMap);
         Map<String, Map<String, Object>> postBody = Collections.singletonMap("fields", fieldMap);
-        RestAssured.given().body(postBody).pathParam("issueId", issueId)
+        RestAssured.given().log().ifValidationFails().body(postBody).pathParam("issueId", issueId)
                 .when().put("/rest/api/2/issue/{issueId}")
-                .then().log().all().assertThat().statusCode(HttpStatus.SC_NO_CONTENT);
+                .then().log().ifValidationFails().assertThat().statusCode(HttpStatus.SC_NO_CONTENT);
+    }
+
+    @Test
+    public void recoverIssue() {
+        List<Map<String, String>> impactKeyList = getIssueListFromJQL(1000);
+        if (impactKeyList.size()!=0){
+            impactKeyList.forEach(stringStringMap -> {
+                System.out.println("修复 : " + stringStringMap);
+                updateField(stringStringMap.get("issueId"), stringStringMap.get("sseverityLevel"));
+            });
+        }else {
+            System.out.println("待修复列表为零，不需要修复");
+        }
+
     }
 
 

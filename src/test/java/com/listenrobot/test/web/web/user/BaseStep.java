@@ -20,22 +20,18 @@ public class BaseStep {
     ConfigBean configBean;
 
     @Bean
-    RestAssured baseDriver() {
-
+    public void baseDriver() {
         PreemptiveBasicAuthScheme preemptiveBasicAuthScheme = new PreemptiveBasicAuthScheme();
         preemptiveBasicAuthScheme.setUserName(configBean.getUsername());
         preemptiveBasicAuthScheme.setPassword(configBean.getPassword());
 
-        RestAssured restAssured = new RestAssured();
-        restAssured.requestSpecification = new RequestSpecBuilder()
+        RestAssured.requestSpecification = new RequestSpecBuilder()
                 .setContentType(ContentType.JSON)
                 .setBaseUri(configBean.getBaseUrl())
                 .setAuth(preemptiveBasicAuthScheme)
                 .build();
-        restAssured.responseSpecification = new ResponseSpecBuilder()
+        RestAssured.responseSpecification = new ResponseSpecBuilder()
                 .expectResponseTime(lessThan(configBean.getResponseTimeLimit()), TimeUnit.SECONDS)
                 .build();
-
-        return restAssured;
     }
 }

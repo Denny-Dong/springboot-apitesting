@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.dennydong</groupId>
-    <artifactId>jiraApi</artifactId>
+    <artifactId>Jira-API</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>jiraApi</name>
+    <name>Jira-API</name>
     <description>Jira API Example</description>
 
     <properties>

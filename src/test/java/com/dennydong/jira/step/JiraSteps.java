@@ -1,6 +1,6 @@
-package com.dennydong.jira.api.step;
+package com.dennydong.jira.step;
 
-import com.dennydong.jira.api.flow.JiraFlow;
+import com.dennydong.jira.flow.JiraFlow;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;

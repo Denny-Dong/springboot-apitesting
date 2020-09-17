@@ -1,4 +1,4 @@
-package com.dennydong.jira.api.config;
+package com.dennydong.jira.config;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;

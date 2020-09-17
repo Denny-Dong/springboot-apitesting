@@ -1,4 +1,4 @@
-package com.dennydong.jira.api;
+package com.dennydong.jira;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

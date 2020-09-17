@@ -1,6 +1,6 @@
-package com.dennydong.jira.api.step;
+package com.dennydong.jira.step;
 
-import com.dennydong.jira.api.config.ConfigBean;
+import com.dennydong.jira.config.ConfigBean;
 import io.restassured.RestAssured;
 import io.restassured.authentication.PreemptiveBasicAuthScheme;
 import io.restassured.builder.RequestSpecBuilder;

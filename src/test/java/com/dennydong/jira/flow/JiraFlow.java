@@ -1,4 +1,4 @@
-package com.dennydong.jira.api.flow;
+package com.dennydong.jira.flow;
 
 import io.restassured.RestAssured;
 import org.apache.http.HttpStatus;

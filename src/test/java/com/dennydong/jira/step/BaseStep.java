@@ -33,5 +33,6 @@ public class BaseStep {
         RestAssured.responseSpecification = new ResponseSpecBuilder()
                 .expectResponseTime(lessThan(configBean.getResponseTimeLimit()), TimeUnit.SECONDS)
                 .build();
+        RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
     }
 }

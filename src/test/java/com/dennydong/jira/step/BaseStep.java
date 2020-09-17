@@ -20,7 +20,7 @@ public class BaseStep {
     ConfigBean configBean;
 
     @Bean
-    public void baseDriver() {
+    public void baseConfig() {
         PreemptiveBasicAuthScheme preemptiveBasicAuthScheme = new PreemptiveBasicAuthScheme();
         preemptiveBasicAuthScheme.setUserName(configBean.getUsername());
         preemptiveBasicAuthScheme.setPassword(configBean.getPassword());

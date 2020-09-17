@@ -1,8 +1,6 @@
-package com.listenrobot.test.web.web.user;
+package com.dennydong.jira.api.step;
 
-import com.listenrobot.test.web.flow.JiraFlow;
-import io.restassured.RestAssured;
-import org.apache.http.HttpStatus;
+import com.dennydong.jira.api.flow.JiraFlow;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;

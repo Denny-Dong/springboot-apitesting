@@ -1,4 +1,4 @@
-package com.listenrobot.test.web.framework;
+package com.dennydong.jira.api.config;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;

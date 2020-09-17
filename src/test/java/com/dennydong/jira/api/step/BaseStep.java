@@ -1,6 +1,6 @@
-package com.listenrobot.test.web.web.user;
+package com.dennydong.jira.api.step;
 
-import com.listenrobot.test.web.framework.ConfigBean;
+import com.dennydong.jira.api.config.ConfigBean;
 import io.restassured.RestAssured;
 import io.restassured.authentication.PreemptiveBasicAuthScheme;
 import io.restassured.builder.RequestSpecBuilder;

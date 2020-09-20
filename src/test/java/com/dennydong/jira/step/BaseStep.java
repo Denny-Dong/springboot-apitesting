@@ -1,7 +1,6 @@
 package com.dennydong.jira.step;
 
 import com.dennydong.jira.config.ConfigBean;
-import io.restassured.RestAssured;
 import io.restassured.authentication.PreemptiveBasicAuthScheme;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
@@ -13,6 +12,7 @@ import org.springframework.stereotype.Component;
 import java.util.concurrent.TimeUnit;
 
 import static org.hamcrest.Matchers.lessThan;
+import static io.restassured.RestAssured.*;
 
 @Component
 public class BaseStep {
@@ -25,14 +25,14 @@ public class BaseStep {
         preemptiveBasicAuthScheme.setUserName(configBean.getUsername());
         preemptiveBasicAuthScheme.setPassword(configBean.getPassword());
 
-        RestAssured.requestSpecification = new RequestSpecBuilder()
+        requestSpecification = new RequestSpecBuilder()
                 .setContentType(ContentType.JSON)
                 .setBaseUri(configBean.getBaseUrl())
                 .setAuth(preemptiveBasicAuthScheme)
                 .build();
-        RestAssured.responseSpecification = new ResponseSpecBuilder()
+        responseSpecification = new ResponseSpecBuilder()
                 .expectResponseTime(lessThan(configBean.getResponseTimeLimit()), TimeUnit.SECONDS)
                 .build();
-        RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
+        enableLoggingOfRequestAndResponseIfValidationFails();
     }
 }

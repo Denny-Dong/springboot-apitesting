@@ -1,4 +1,4 @@
 .idea/
 logs/
-src/test/resources/config.properties
 /target/test-classes/*
+/*.iml

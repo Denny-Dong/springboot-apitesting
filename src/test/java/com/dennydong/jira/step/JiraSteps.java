@@ -13,7 +13,6 @@ import java.util.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class JiraSteps {
 
     JiraFlow jiraFlow = new JiraFlow();
